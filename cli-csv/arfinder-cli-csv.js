@@ -29,6 +29,7 @@ if (newFile)
 	newFile = false;
 }
 
+// TODO: This should not be global.
 var isbn = "";
 
 /* Used to get attributes. Set up so that if an attribute
@@ -47,6 +48,8 @@ function getAtrribute(attribute, data) {
 	return result;
 }
 
+/* This function takes either a JSON string or object and converts it into
+ * a CSV string that is the returned to the caller. */
 function json2csv(JSONData) {
     //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
     var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
@@ -67,15 +70,25 @@ function json2csv(JSONData) {
 	return CSV;
 }
 
-
+// Function called to access the Google Books JSON API
 function searchGoogle() {
+    
+    // Create a new "Tab"
 	var google = wp.create();
+    
+    // Open the API using the isbn.
 	google.open(googleURL + isbn, function(status) {
 		if (status == "success")
 		{
+            // Parse the JSON returned by the server.
 			data = JSON.parse(google.plainText);
 
+            // Only continue if only one book was found because otherwise
+            // there is a problem.
 			if (data["totalItems"] == 1) {
+                
+                // Create a new object to hold the information and extract the
+                // relevant parts from the returned json.
 				var result = new Object();
 				var book = data["items"][0]["volumeInfo"];
 				result.isbn = isbn;
@@ -96,15 +109,20 @@ function searchGoogle() {
 				result.topic = getAtrribute("categories", book);
 				result.series = "";
 				
+                // Write the title to the cli and write the collected
+                // information into the csv file.
 				console.log(result.title);				
 				bookDB.write(json2csv(result));
 			}
 			else {
+                // If google didn't have an error but didn't return any information
+                // then an error is printed and the isbn added to the unknown csv file.
 				console.log("Book details not available on Google.");
 				unknownBookDB.write(isbn + "\r\n");
 			}
 		}
 		
+        // Close the google 'tab' and restart for next search.
 		google.close();	
 		page.onLoadFinished = function() {};
 		page.open(arReaderURL, bookSearch);
@@ -115,6 +133,9 @@ function bookSearch() {
 	page.onLoadFinished = function () {
 		page.onLoadFinished = function() {
 			var result = page.evaluate(function(isbn) {
+                
+                // Makes a new object and retrieved the information off the page for the various
+                // attributes - fortunately the ARBookFind site is very well organised.
 				var result = new Object();
 				result.isbn = isbn;
 				result.title = document.getElementById('ctl00_ContentPlaceHolder1_ucBookDetail_lblBookTitle').textContent;
@@ -134,6 +155,9 @@ function bookSearch() {
 				result.publisher = "";
 				result.publishedDate = "";
 				
+                // The publisher information is given in a table at the bottom of the page as one book
+                // could have multiple ISBNs dur to being reissued. This code goes through the ISBNs
+                // in the table to find the correct row and then pulls the other info from that row.
 				var table = document.getElementById("ctl00_ContentPlaceHolder1_ucBookDetail_tblPublisherTable")
 				var rows = table.children[0].children
 				for (var index = 1; index < rows.length; index++) { 
@@ -148,13 +172,19 @@ function bookSearch() {
 				return result;
 			}, isbn);
 			
+            // If found write the title to the cli and write the csv
+            // version of the object to the csv file.
 			console.log(result.title);
 			bookDB.write(json2csv(result));
 			
+            // Reset for the next search by clearing the onLoadFinished callback
+            // and reopening the main search page to start again.
 			page.onLoadFinished = function() {};
 			page.open(arReaderURL, bookSearch);
 		};
 		
+        // Selects the first book link on the search results page and
+        // simulates a click on it to get to the detailed results.
 		if (!page.evaluate(function() {
 				var dom = document.querySelectorAll("[class=link_bold]");
 				if (dom.length == 1)
@@ -166,16 +196,22 @@ function bookSearch() {
 				return false;
 			}))
 		{
+            // If no details were found on the ARBookFind site then print
+            // an error message and try searching Google instead.
 			console.log("Book details not available on AR Book Finder.");	
 			searchGoogle();
 
 		}
 	};
 	
+    // Reads the ISBN to be searched for from the cli
 	var system = require('system');
 	system.stdout.write('ISBN: ');
+    
+    // Remove any hypens and trailing white spaces.
 	isbn = system.stdin.readLine().replace(/-/g, "").trim();
 	
+    // If the isbn is empty then cleanup and quit.
 	if (isbn == "")
 	{
 		bookDB.close();
@@ -185,12 +221,18 @@ function bookSearch() {
 	}
 		
 	page.evaluate(function(book) {
+        // Simulate entering the ISBN into the search box and clicking the button.
 		document.getElementById('ctl00_ContentPlaceHolder1_txtKeyWords').value = book;
 		document.getElementById('ctl00_ContentPlaceHolder1_btnDoIt').click();
 	}, isbn);
 }
 
+// Create the main 'tab' to be used.
 var page = wp.create();
+
+// Open the main page and simulate clicking on the
+// teacher option to set the cookie and get to the
+// main search page.
 page.open(arReaderURL, function(status) {
 	console.log("Status: " + status);
 	if (status == "success")
