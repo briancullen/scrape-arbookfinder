@@ -1,17 +1,23 @@
 var fs = require('fs');
 var wp = require('webpage');
+
+// URLs that are used to look up the book information
 var arReaderURL = 'http://www.arbookfind.co.uk';
 var googleURL = 'https://www.googleapis.com/books/v1/volumes?q=isbn:';
 
-var newFile = (!fs.exists("libraryDB.csv"));
-var bookDB = fs.open('libraryDB.csv', 'a');
-var unknownBookDB = fs.open('libraryUnknowDB.csv', 'a');
-
-var isbn = "";
-
+// Define the coloumns (and their order) for the CSV file.
 var columns = ["isbn", "title", "author", "publisher", "publishedDate", "quizNumber", "lang", "summary", "level",
 		"interest", "points", "ranking", "words", "pages", "category", "topic", "series"];
 
+
+// Check if we are going to be making a new file.
+var newFile = (!fs.exists("libraryDB.csv"));
+
+// Opens both csv files (this automatically creates them if they don't exist).
+var bookDB = fs.open('libraryDB.csv', 'a');
+var unknownBookDB = fs.open('libraryUnknownDB.csv', 'a');
+
+// If it was a new file then write in the column headings.
 if (newFile)
 {
 	var row = "";
@@ -23,7 +29,12 @@ if (newFile)
 	newFile = false;
 }
 
+var isbn = "";
 
+/* Used to get attributes. Set up so that if an attribute
+ * isn't in the data then an empty string is returned. Also
+ * if the attribute is not a string then it is converted to
+ * one. Guaranteed to return a string. */
 function getAtrribute(attribute, data) {
 	var result = "";
 	if (attribute in data)
@@ -193,27 +204,4 @@ page.open(arReaderURL, function(status) {
 	
 });
 
-// document.getElementById('radTeacher').checked = true;
-// document.getElementById('btnSubmitUserType').click()
-// document.getElementById('ctl00_ContentPlaceHolder1_txtKeyWords').value = "0-7475-3269-9"
-// document.getElementById('ctl00_ContentPlaceHolder1_btnDoIt').click()
-// document.querySelectorAll("[class=link_bold]")[0].getAttribute("href")
-// document.getElementById('ctl00_ContentPlaceHolder1_ucBookDetail_lblBookTitle').textContent
-// document.getElementById(ctl00_ContentPlaceHolder1_ucBookDetail_lblAuthor).textContent
-// document.getElementById(ctl00_ContentPlaceHolder1_ucBookDetail_lblQuizNumber).textContent
-// document.getElementById(ctl00_ContentPlaceHolder1_ucBookDetail_lblLanguageCode).textContent
-// document.getElementById(ctl00_ContentPlaceHolder1_ucBookDetail_lblBookSummary).textContent
-// document.getElementById(ctl00_ContentPlaceHolder1_ucBookDetail_lblBookLevel).textContent
-// document.getElementById(ctl00_ContentPlaceHolder1_ucBookDetail_lblInterestLevel).textContent
-// document.getElementById(ctl00_ContentPlaceHolder1_ucBookDetail_lblPoints).textContent
-// document.getElementById("ctl00_ContentPlaceHolder1_ucBookDetail_lblRanking").firstChild.getAttribute("alt")
-// document.getElementById(ctl00_ContentPlaceHolder1_ucBookDetail_lblWordCount).textContent
-// document.getElementById(ctl00_ContentPlaceHolder1_ucBookDetail_lblFictionNonFiction).textContent
-// document.getElementById(ctl00_ContentPlaceHolder1_ucBookDetail_lblTopicLabel).textContent
-// document.getElementById(ctl00_ContentPlaceHolder1_ucBookDetail_lblSeriesLabel).textContent
-
-// var table = document.getElementById("ctl00_ContentPlaceHolder1_ucBookDetail_tblPublisherTable")
-// var rows = table.children[0].children
-// rows[1].children[1].textContent.replace(/-/g, "")
-// for (var index = 1; index < rows.length; index++) { console.log(rows[index].children[1].textContent.replace(/-/g, "")); }
 
