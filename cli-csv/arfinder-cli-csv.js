@@ -1,6 +1,8 @@
 var fs = require('fs');
 var wp = require('webpage');
 
+var utils = require('../core/isbn-util');
+
 // URLs that are used to look up the book information
 var arReaderURL = 'http://www.arbookfind.co.uk';
 var googleURL = 'https://www.googleapis.com/books/v1/volumes?q=isbn:';
@@ -209,7 +211,7 @@ function bookSearch() {
 	system.stdout.write('ISBN: ');
     
     // Remove any hypens and trailing white spaces.
-	isbn = system.stdin.readLine().replace(/-/g, "").trim();
+	isbn = utils.normaliseISBN(system.stdin.readLine());
 	
     // If the isbn is empty then cleanup and quit.
 	if (isbn == "")
