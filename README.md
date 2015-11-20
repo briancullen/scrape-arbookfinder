@@ -28,7 +28,7 @@ The script will ask for a new ISBN after each search. To end the script just ent
 ###Executing
 
 ```
-phantonjs arfinder-cli-csv.js
+phantomjs arfinder-cli-csv.js
 ```
 
 HTTP - JSON
