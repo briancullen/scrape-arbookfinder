@@ -10,8 +10,7 @@ function bookDetailsHandler (page, isbn, callback) {
                 // Makes a new object and retrieved the information off the page for the various
                 // attributes - fortunately the ARBookFind site is very well organised.
                 var result = new Object();
-                result.isbn = isbn;
-
+                
                 for (var index = 0; index < datamapping.columnNames.length; index++) {
                     column = datamapping.columnNames[index];
                     if (column in datamapping.columnHTMLId) {
@@ -22,6 +21,7 @@ function bookDetailsHandler (page, isbn, callback) {
                     }
                 }
                 
+                result.isbn = isbn;
                 result.ranking = document.getElementById(datamapping.rankHTMLId).firstChild.getAttribute("alt");
                 var table = document.getElementById(datamapping.publisherTblHTMLId);
 				var rows = table.children[0].children;
@@ -78,7 +78,6 @@ function searchResultsHandler (page, isbn, callback) {
 
 
 function arBookSearch (page, isbn, callback) {
-    callback(null);
     logger.debug("Starting serach for " + isbn);
     page.onLoadFinished = searchResultsHandler (page, isbn, callback);
     
