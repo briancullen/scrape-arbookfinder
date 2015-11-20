@@ -53,6 +53,30 @@ function initSearch (statusCallback) {
     });
 }
 
+function doHandlers(page, isbn, resultCallback) {
+    var index = 0;
+    var handlersFunction = function (result) {
+        if (!result) {
+           index += 1;
+            
+            if (index < handlers.length) {
+                handlers[index](page,isbn,handlersFunction);
+            }
+            else {
+                result = {};
+                result.isbn = isbn;
+                resultCallback(result);
+            }
+        }
+        else {
+            resultCallback(result);
+            return;
+        }
+        
+    }
+    handlers[index](page, isbn, handlersFunction);
+}
+
 function searchByISBN (isbn, resultsCallback) {
 
     // If there is nothing to consume the
@@ -63,38 +87,26 @@ function searchByISBN (isbn, resultsCallback) {
     }
     
     isbn = isbnutils.normaliseISBN(isbn);
-    console.log("Stage 1");
+    if (isbn == null)
+    {
+        logger.debug("Invalud ISBN (" + isbn + ")");
+        resultsCallBack(null);
+        return;
+        
+    }
+    
     // Reset the main page back to the search.
     page.onLoadFinished = function () {};
-    console.log("Stage 1");
     page.open(arReaderURL, function (status) {
-        console.log("Stage 2b");
         if (status != "success") {
             logger.error("Cannot open " + arReaderURL);
             resultsCallback(null);
+            return;
         }
 
-        console.log("Stage 2");
         // Search the arBookSearch site and it it fails fall back
         // to the google search.
-        handlers.arBookSearch(page, isbn, function (result) {
-            //logger.trace(JSON.stringify(result));
-            if (!result)
-            {
-                logger.debug("Unable to find " + isbn + " on " + arReaderURL);
-                handlers.googleBookSearch(isbn, function (result) {
-                    if (!result) {
-                        result = { };
-                        result["isbn"] = isbn;
-                    }
-                    
-                    resultsCallback(result);
-                });
-            }
-            else {
-                resultsCallback(result);
-            }
-        }, resultsCallback);
+        doHandlers(page, isbn, resultsCallback);
     });
 }
 
