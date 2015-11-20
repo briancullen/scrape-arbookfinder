@@ -17,14 +17,13 @@ function googleBookSearch (page, isbn, resultsCallback) {
 	google.open(googleURL + isbn, function(status) {
 		if (status == "success")
 		{
-            logger.debug("Found info on Google for " + isbn);
             // Parse the JSON returned by the server.
 			data = JSON.parse(google.plainText);
 
             // Only continue if only one book was found because otherwise
             // there is a problem.
 			if (data["totalItems"] == 1) {
-                
+                logger.debug("Found info on Google for " + isbn);    
                 // Create a new object to hold the information and extract the
                 // relevant parts from the returned json.
 				var result = new Object();
