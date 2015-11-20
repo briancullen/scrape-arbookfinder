@@ -8,7 +8,7 @@ var wp = require('webpage');
 
 const googleURL = 'https://www.googleapis.com/books/v1/volumes?q=isbn:';
 
-function googleBookSearch (isbn, resultsCallback) {
+function googleBookSearch (page, isbn, resultsCallback) {
     // Create a new "Tab"
 	var google = wp.create();
 
