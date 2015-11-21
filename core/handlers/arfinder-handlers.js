@@ -66,12 +66,12 @@ function searchResultsHandler (page, isbn, callback) {
                 }))
             {
                 logger.debug("Book details not available on AR Book Finder.");
-                callback (null);
+                callback ();
             }
         }
         else {
             logger.error("Unable to get the search results (" + status + ")");
-            callback (null);
+            callback ();
         }
     };
 }

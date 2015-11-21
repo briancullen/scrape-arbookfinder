@@ -51,12 +51,12 @@ function googleBookSearch (page, isbn, resultsCallback) {
                 // If google didn't have an error but didn't return any information
                 // then an error is printed and the isbn added to the unknown csv file.
 				logger.debug("Book details not available on Google.");
-                resultsCallback(null);
+                resultsCallback();
 			}
 		}
         else {
             logger.error("Unable to search for book on Google (" + status + ")");
-            resultsCallback(null);
+            resultsCallback();
         }
 		
         // Close the google 'tab' and restart for next search.
