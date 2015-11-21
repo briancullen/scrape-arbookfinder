@@ -1,6 +1,9 @@
 import time
 import BaseHTTPServer
 import subprocess
+import re
+
+import pyisbn
 
 HOST_NAME = '' # !!!REMEMBER TO CHANGE THIS!!!
 PORT_NUMBER = 8000 # Maybe set this to 9000.
@@ -15,7 +18,18 @@ class SimpleRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         s.send_error(404)
         
     def do_GET(s):
-        s.send_error(404)
+        try:
+            # Do a quick tidy up to make sure that there
+            # is nothing untoward in the path - might be overkill?
+            isbn = re.sub(r'[^\dXx]', '', s.path)
+            
+            if pyisbn.validate(isbn):
+                s.send_error(401);
+            else:
+                s.send_error(404)
+        except ValueError as e:
+            s.send_error(404)
+            
 
 if __name__ == '__main__':
     httpd = PhantomHTTPServer((HOST_NAME, PORT_NUMBER), SimpleRequestHandler)
