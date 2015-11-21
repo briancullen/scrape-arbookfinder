@@ -89,8 +89,8 @@ function searchByISBN (isbn, resultsCallback) {
     isbn = isbnutils.normaliseISBN(isbn);
     if (isbn == null)
     {
-        logger.debug("Invalud ISBN (" + isbn + ")");
-        resultsCallBack(null);
+        logger.debug("Invalid ISBN (" + isbn + ")");
+        setTimeout(resultsCallback, 0)
         return;
         
     }
@@ -100,7 +100,7 @@ function searchByISBN (isbn, resultsCallback) {
     page.open(arReaderURL, function (status) {
         if (status != "success") {
             logger.error("Cannot open " + arReaderURL);
-            resultsCallback(null);
+            resultsCallback();
             return;
         }
 
