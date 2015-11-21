@@ -1,5 +1,4 @@
 var core = require('../core/arfinder-core');
-var isbnutils = require('../core/util/isbn-util.js');
 var csvutil = require('../core/util/csv-util.js');
 var system = require('system');
 var fs = require('fs');
