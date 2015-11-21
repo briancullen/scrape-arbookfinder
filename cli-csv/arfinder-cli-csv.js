@@ -42,7 +42,14 @@ function doSearch () {
         core.endSearch();	        
     }
     
-    core.searchByISBN(isbn, function(result) { writeCSV(result); doSearch(); });
+    core.searchByISBN(isbn, function(result) {
+        if (result) {
+            writeCSV(result);
+        }
+        
+        doSearch();
+            
+    });
 }
 
 core.initSearch(doSearch);
