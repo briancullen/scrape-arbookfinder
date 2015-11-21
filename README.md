@@ -65,8 +65,8 @@ core.searchByISBN(isbn, function (result) {
 });
 ```
 
-Using In Your Own Scripts
--------------------------
+Adding Your Own Handlers
+------------------------
 
 If you want to add more handlers so that if no book details are found then it will check another source that, again, is fairly straight forward. Create you module in the core/handlers folder with a sensible name. Create an export a function that takes two parameters - the isbn and the callback for the results. Remember that the standardised fields that the handlers should return are shown in core/datamapping/core-datamapping.js. All fields should be there even if they are empty strings.
 
