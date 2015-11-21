@@ -8,9 +8,15 @@ var wp = require('webpage');
 
 const googleURL = 'https://www.googleapis.com/books/v1/volumes?q=isbn:';
 
-function googleBookSearch (page, isbn, resultsCallback) {
+function googleBookSearch (isbn, callback) {
     // Create a new "Tab"
 	var google = wp.create();
+    
+    // Make sure the page is closed no matter what.
+    var resultsCallback = function (results) {
+        google.close();
+        callback(results);
+    }
 
     logger.debug("About to search using " + googleURL + isbn);
     // Open the API using the isbn.
@@ -58,9 +64,6 @@ function googleBookSearch (page, isbn, resultsCallback) {
             logger.error("Unable to search for book on Google (" + status + ")");
             resultsCallback();
         }
-		
-        // Close the google 'tab' and restart for next search.
-		google.close();	
 	}); 
 }
 
