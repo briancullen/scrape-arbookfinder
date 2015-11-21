@@ -13,7 +13,6 @@ function exit() {
 function doHandlers(isbn, resultCallback) {
     var index = 0;
     var handlersFunction = function (result) {
-        logger.trace("Process handler call")
         if (!result) {
            index += 1;
             
@@ -44,10 +43,11 @@ function searchByISBN (isbn, resultsCallback) {
         return;
     }
     
+    logger.debug("Starting serach for " + isbn);
     isbn = isbnutils.normaliseISBN(isbn);
     if (isbn == null)
     {
-        logger.debug("Invalid ISBN (" + isbn + ")");
+        logger.debug("Invalid ISBN");
         setTimeout(resultsCallback, 0);
     }
     else {

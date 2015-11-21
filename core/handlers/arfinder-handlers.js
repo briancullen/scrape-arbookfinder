@@ -82,7 +82,6 @@ function searchResultsHandler (page, isbn, callback) {
 
 
 function arBookSearch (isbn, callback) {
-    logger.debug("Starting serach for " + isbn);
     initSearch(function(page) {
         if (!page) {
             setTimeout (callback, 0);
