@@ -4,11 +4,11 @@
 // 13 digit number. Returns null if any of the
 // checks fail.
 function normaliseISBN (isbn) {
-    isbn = isbn.replace(/[^\dX]/gi, '');
+    isbn = isbn.replace(/[^\dX]/gi, '').toUpperCase();
     if (isISBN10(isbn)) {
         isbn = convertToISBN13(isbn);
     }
-    else if (!isISBN13(isbn)) {
+    else if (isbn.indexOf("X") != -1 || !isISBN13(isbn)) {
         return null;
     }
 
