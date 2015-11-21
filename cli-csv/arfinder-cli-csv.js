@@ -38,7 +38,7 @@ function doSearch () {
     {
         bookDB.close();
         unknownBookDB.close();
-        core.endSearch();	        
+        core.exit();	        
     }
     
     core.searchByISBN(isbn, function(result) {
@@ -51,4 +51,4 @@ function doSearch () {
     });
 }
 
-core.initSearch(doSearch);
+doSearch();
