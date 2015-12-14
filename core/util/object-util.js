@@ -1,3 +1,5 @@
+// Merges the two object with properties in obj2
+// overwriting properties in obj1.
 function mergeObjects (obj1, obj2) {
     
     if (!obj1 && obj2) {
