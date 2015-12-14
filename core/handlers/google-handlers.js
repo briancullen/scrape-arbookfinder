@@ -46,6 +46,9 @@ function googleBookSearch (isbn, callback) {
                 }
                 
                 result.isbn = isbn;
+                if (book.imageLinks) {
+                  result.imageURL = objutil.getAttribute("thumbnail", book.imageLinks);
+                }
 				result.title = objutil.getAttribute("title", book) + " " + objutil.getAttribute("subtitle", book);
                 
                 // Fix to fit in with ARBookFind

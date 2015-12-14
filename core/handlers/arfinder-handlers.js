@@ -28,6 +28,7 @@ function bookDetailsHandler (page, isbn, callback) {
                 
                 result.isbn = isbn;
                 result.ranking = document.getElementById(datamapping.rankHTMLId).firstChild.getAttribute("alt");
+                result.imageURL = document.getElementById(datamapping.imageURLHTMLId).getAttribute("src");
                 var table = document.getElementById(datamapping.publisherTblHTMLId);
 				var rows = table.children[0].children;
 				for (var index = 1; index < rows.length; index++) { 

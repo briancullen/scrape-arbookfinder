@@ -18,8 +18,10 @@ dataHTMLId[core.columnNames[16]] = baseHTMLId+"lblSeriesLabel";
 
 const dataRankingHTMLId = baseHTMLId+"lblRanking";
 const dataPublisherTblHTMLId = baseHTMLId+"tblPublisherTable";
+const imageURLHTMLId = baseHTMLId+"imgBookCover"
 
 module.exports.columnNames = core.columnNames;
 module.exports.columnHTMLId = dataHTMLId;
 module.exports.rankHTMLId = dataRankingHTMLId;
 module.exports.publisherTblHTMLId = dataPublisherTblHTMLId;
+module.exports.imageURLHTMLId = imageURLHTMLId;

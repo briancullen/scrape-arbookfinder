@@ -1,3 +1,4 @@
+node_modules
 cli-csv/libraryDB.csv
 cli-csv/libraryUnknownDB.csv
 /http-json/pyisbn.pyc
