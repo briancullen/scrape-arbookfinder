@@ -1,0 +1,26 @@
+{
+  "name": "scrape-arbookfinder",
+  "version": "0.1.0",
+  "description": "ARBookFind Scraper",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^2.3.4",
+    "unit.js": "^2.0.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/briancullen/scrape-arbookfinder.git"
+  },
+  "author": "Brian Cullen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/briancullen/scrape-arbookfinder/issues"
+  },
+  "homepage": "https://github.com/briancullen/scrape-arbookfinder"
+}
