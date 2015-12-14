@@ -1,6 +1,8 @@
 ARBookFinder Scraper
 ====================
 
+[![Build Status](https://travis-ci.org/briancullen/scrape-arbookfinder.svg)](https://travis-ci.org/briancullen/scrape-arbookfinder)
+
 ** While it all seems to work now this is definitely a work in progress. **
 
 For the accelerated reader program it is necessary to know the points and other details for the books students are reading. These can be found on arbookfind.co.uk but when trying to catalog a large number of books the fact that the website does not support an API presents a difficulty. Indeed the site requires a cookie to be set to access the search engine.
