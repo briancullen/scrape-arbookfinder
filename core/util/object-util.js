@@ -32,18 +32,29 @@ function mergeObjects (obj1, obj2) {
  * if the attribute is not a string then it is converted to
  * one. Guaranteed to return a string. */
 function getAttribute(attribute, data) {
-	var result = "";
     
     if (!data || !attribute)
-        return result;
+        return "";
     
-	if (attribute in data)
-	{
-		result = data[attribute];
-		if (typeof result != "string")
-			result = result.toString();
-	}
-	
+    var result = data;
+    properties = attribute.split('.');
+    for (var index in properties) {
+      var currentAttribute = properties[index];
+      
+      if (typeof(result) == 'object'
+          && currentAttribute in result)
+      {
+          result = result[currentAttribute];
+      }
+      else {
+        result = "";
+        break;
+      }
+    }
+  
+    if (typeof(result) != "string")
+      result = result.toString();
+  
 	return result;
 }
 
