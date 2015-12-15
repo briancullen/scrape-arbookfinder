@@ -4,7 +4,13 @@ var coredata = require('../datamapping/core-datamapping.js');
  * a CSV string that is the returned to the caller. */
 function json2csv(JSONData) {
     //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
-    var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+    var arrData = JSONData;
+    if (!arrData) {
+      arrData = {};
+    }
+    else if (typeof JSONData != 'object') {
+      arrData = JSON.parse(JSONData);
+    }
     
     var CSV = "";    
 	var row = "";
@@ -12,7 +18,11 @@ function json2csv(JSONData) {
     for (var index in coredata.columnNames) {
 		value = "";
 		if (coredata.columnNames[index] in arrData)
-			value = arrData[coredata.columnNames[index]].replace(/\"/g, '""');
+            // Convert the value to a string if necessary.
+            value = arrData[coredata.columnNames[index]]
+            if (typeof(value) != 'string')
+              value = JSON.stringify(value);
+			value = value.replace(/\"/g, '""');
 		
 		row += '"' + value + '",';
     }
