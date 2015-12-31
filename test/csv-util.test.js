@@ -1,8 +1,10 @@
-var test = require('unit.js');
-var objectutil = require("../core/util/object-util");
+/* global describe it */
+var test = require('unit.js')
 
-describe('Testing CSV Util', function(){
-  describe('JSON to CSV', function(){
-    
-  });
-});
+describe('Testing CSV Util', function () {
+  describe('JSON to CSV', function () {
+    it('Placeholder test', function () {
+      test.bool(true).isTrue()
+    })
+  })
+})

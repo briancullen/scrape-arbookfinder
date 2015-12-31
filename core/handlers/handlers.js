@@ -1,4 +1,4 @@
-var arBookFind = require("./arfinder-handlers.js");
-var googleBooks = require("./google-handlers.js");
+var arBookFind = require('./arfinder-handlers.js')
+var googleBooks = require('./google-handlers.js')
 
-module.exports = [arBookFind.arBookSearch, googleBooks.googleBookSearch];
+module.exports = [arBookFind.arBookSearch, googleBooks.googleBookSearch]
