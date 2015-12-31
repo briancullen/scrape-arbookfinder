@@ -132,7 +132,7 @@ function initSearch (callback) {
           document.getElementById('radTeacher').checked = true
           document.getElementById('btnSubmitUserType').click()
         })
-      } else if (page.url === arReaderURL + '' ||
+      } else if (page.url === arReaderURL + '/' ||
         page.url === arReaderURL + '/default.aspx') {
         callback(page)
       } else {
