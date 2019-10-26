@@ -20,7 +20,7 @@ Prerequistes
 
 Example Output
 --------------
-Below is an abreviated version of the JSON output that is produced by the program. This is what you will be given as a result if you write your own handlers or use the http server version. The CSV client merely takes this information and inserts it, unchanged, into a CSV file. If no information is found for a particular property it will still be added. However if no information is found on the book at all then only the isbn will be returned and no other properties will be set.
+Below is an abbreviated version of the JSON output that is produced by the program. This is what you will be given as a result if you write your own handlers or use the http server version. The CSV client merely takes this information and inserts it, unchanged, into a CSV file. If no information is found for a particular property it will still be added. However if no information is found on the book at all then only the isbn will be returned and no other properties will be set.
 
 ```js
 {
